@@ -1,36 +1,8 @@
-/*
-环球挑战赛
-活动时间：2021-02-02 至 2021-02-22
-1个号可以助力5人，需要5人助力，如每天跑满能换1000+京豆
-多个账号会相互互助
-活动地址：https://gmart.jd.com/?appId=54935130
-活动入口：京东app搜索京东国际-环球挑战赛
-已支持IOS双京东账号,Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-============Quantumultx===============
-[task_local]
-#环球挑战赛
-0 9,12,20,21 2-22 2 * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_global.js, tag=环球挑战赛, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_global.png, enabled=true
-
-================Loon==============
-[Script]
-cron "0 9,12,20,21 2-22 2 *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_global.js,tag=环球挑战赛
-
-===============Surge=================
-环球挑战赛 = type=cron,cronexp="0 9,12,20,21 2-22 2 *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_global.js
-
-============小火箭=========
-环球挑战赛 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_global.js, cronexpr="0 9,12,20,21 2-22 2 *", timeout=3600, enable=true
- */
 const $ = new Env('环球挑战赛');
-
 const notify = $.isNode() ? require('./sendNotify') : '';
-//Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
-//IOS等用户直接用NobyDa的jd cookie
-
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {

@@ -1,5 +1,5 @@
 
-name: jd_crazy_joy crazyJoy任务
+name: cj crazyJoy任务
  
 on:
   workflow_dispatch:
@@ -31,7 +31,7 @@ jobs:
       - name: 运行 【crazyJoy任务】
         if: env.JD_COOKIE
         run: |
-          node jd_crazy_joy.js
+          node cj.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

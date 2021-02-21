@@ -1,33 +1,8 @@
-/*
-京东汽车，签到满500赛点可兑换500京豆，一天运行一次即可
-长期活动
-活动入口：首页👉京东汽车👉屏幕右中部，车主福利
-更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js
-已支持IOS双京东账号, Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
-============Quantumultx===============
-[task_local]
-#京东汽车
-10 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, tag=京东汽车, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
-
-================Loon==============
-[Script]
-cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, tag=京东汽车
-
-===============Surge=================
-京东汽车 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js
-
-============小火箭=========
-京东汽车 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, cronexpr="10 7 * * *", timeout=200, enable=true
- */
 const $ = new Env('京东汽车');
-
 const notify = $.isNode() ? require('./sendNotify') : '';
-//Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
-//IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {

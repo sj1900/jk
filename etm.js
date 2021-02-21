@@ -11,18 +11,6 @@
 助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
 参数 helpAuthor = false
 
-更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js
-============Quantumultx===============
-[task_local]
-#百变大咖秀
-10 10,11 * * 2-5 https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js, tag=百变大咖秀,  enabled=true
-================Loon==============
-[Script]
-cron "10 10,11 * * 2-5" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js,tag=百变大咖秀
-===============Surge=================
-百变大咖秀 = type=cron,cronexp="10 10,11 * * 2-5",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js
-============小火箭=========
-百变大咖秀 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_entertainment.js, cronexpr="10 10,11 * * 2-5", timeout=3600, enable=true
 */
 
 const $ = new Env('百变大咖秀');
@@ -33,7 +21,7 @@ let helpAuthor = true;//为作者助力的开关
 const ACT_ID = 'dz2102100001340203';
 const questionList = [
   { q: '84d9ef3ccb2543449935871c2a95f2aa', a: 'B:玲花' },
-  { q: '12ffa15a77c3489ca644ff0880e79343', a: 'A:倪萍' },
+  { q: '12ffa15a77c3489ca644ff0880e79343', a: 'C:鞠萍' },
   { q: '2c71328d97e6422a8181c6c025e078cc', a: 'A:管乐' },
   { q: '3e7c6a1f59e043a59bcdca9b01b4cdaa', a: 'B:汪小敏' },
   { q: '3f471e4309d7435c81604d0fe1d600b7', a: 'A:王智' },
@@ -117,11 +105,6 @@ async function entertainment() {
     await draw();
     console.log(`好友助力码【 ${$.shareCode} 】`);
     await submitShareCode({ 'share_code': $.shareCode, 'pt_key': $.UserName });
-    if ($.isNode()) {
-      await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n${message}`);
-    } else {
-      await $.msg(`${$.name}运行完成`, message);
-    }
   } else {
     if ($.isNode()) {
       await notify.sendNotify(`${$.name}运行完成`, `京东账号${$.index} ${$.nickName || $.UserName}\n京东说‘本活动与你无缘，请关注其他活动。’`);

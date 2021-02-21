@@ -1,5 +1,5 @@
 
-name: jd_cash 签到领现金
+name: cas 签到领现金
  
 on:
   workflow_dispatch:
@@ -29,7 +29,7 @@ jobs:
       - name: 运行 【签到领现金】
         if: env.JD_COOKIE
         run: |
-          node jd_cash.js
+          node cas.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

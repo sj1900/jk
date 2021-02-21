@@ -1,5 +1,5 @@
 
-name: jd_jdzz 京东赚赚
+name: jdz 京东赚赚
  
 on:
   workflow_dispatch:
@@ -29,7 +29,7 @@ jobs:
       - name: 运行 【京东赚赚】
         if: env.JD_COOKIE
         run: |
-          node jd_jdzz.js
+          node jdz.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

@@ -1,5 +1,5 @@
 
-name: jd_small_home 东东小窝
+name: sh 东东小窝
  
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: 运行 【东东小窝】
         if: env.JD_COOKIE
         run: |
-          node jd_small_home.js
+          node sh.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

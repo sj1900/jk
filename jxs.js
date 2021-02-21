@@ -1,28 +1,7 @@
-/*
-京喜签到
-已支持IOS双京东账号,Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-============Quantumultx===============
-[task_local]
-#京喜签到
-5 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js, tag=京喜签到, enabled=true
-
-================Loon==============
-[Script]
-cron "5 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js,tag=京喜签到
-
-===============Surge=================
-京喜签到 = type=cron,cronexp="5 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js
-
-============小火箭=========
-京喜签到 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js, cronexpr="5 0 * * *", timeout=200, enable=true
- */
 const $ = new Env('京喜签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
-//Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-//IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = true
 if ($.isNode()) {

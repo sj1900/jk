@@ -1,11 +1,4 @@
-/*
 
-京东抽奖机
-
-自用
-author：yangtingxiao
-github： https://github.com/yangtingxiao
- */
 const $ = new Env('京东抽奖机');
 main();
 async function main() {

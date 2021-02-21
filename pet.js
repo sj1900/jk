@@ -1,38 +1,10 @@
-/*
-东东萌宠 更新地址： https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js
-更新时间：2021-01-19
-已支持IOS双京东账号,Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-
-互助码shareCode请先手动运行脚本查看打印可看到
-一天只能帮助5个人。多出的助力码无效
-
-=================================Quantumultx=========================
-[task_local]
-#东东萌宠
-15 6-18/6 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js, tag=东东萌宠, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdmc.png, enabled=true
-
-=================================Loon===================================
-[Script]
-cron "15 6-18/6 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js,tag=东东萌宠
-
-===================================Surge================================
-东东萌宠 = type=cron,cronexp="15 6-18/6 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js
-
-====================================小火箭=============================
-东东萌宠 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js, cronexpr="15 6-18/6 * * *", timeout=200, enable=true
-
-*/
 const $ = new Env('东东萌宠');
 let cookiesArr = [], cookie = '', jdPetShareArr = [], isBox = false, notify, newShareCodes;
-//助力好友分享码(最多5个,否则后面的助力失败),原因:京东农场每人每天只有四次助力机会
-//此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
-//下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
    //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'MTAxODc2NTEzNTAwMDAwMDAwMjg3MDg2MA==@MTAxODc2NTEzMzAwMDAwMDAyNzUwMDA4MQ==@MTAxODc2NTEzMjAwMDAwMDAzMDI3MTMyOQ==@MTAxODc2NTEzNDAwMDAwMDAzMDI2MDI4MQ==@MTAxODcxOTI2NTAwMDAwMDAxOTQ3MjkzMw==',
+  '',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'MTAxODc2NTEzMjAwMDAwMDAzMDI3MTMyOQ==@MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==@MTAxODc2NTEzOTAwMDAwMDAyNzE2MDY2NQ==@MTE1NDUyMjEwMDAwMDAwNDI0MDM2MDc=',
+  '',
 ]
 let message = '', subTitle = '', option = {};
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送

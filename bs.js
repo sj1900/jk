@@ -1,3 +1,14 @@
+/*
+ * @Author: LXK9301 https://github.com/LXK9301
+ */
+/*
+京豆签到,自用,可N个京东账号
+活动入口：各处的签到汇总
+Node.JS专用
+IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
+更新时间：2021-1-19
+Modified From github https://github.com/ruicky/jd_sign_bot
+ */
 const $ = new Env('京豆签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

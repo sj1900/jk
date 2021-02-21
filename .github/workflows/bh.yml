@@ -1,5 +1,5 @@
 
-name: jd_bean_home 京豆额外奖励
+name: bh 京豆额外奖励
  
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: 运行 【京豆额外奖励】
         if: env.JD_COOKIE
         run: |
-          node jd_bean_home.js
+          node bh.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

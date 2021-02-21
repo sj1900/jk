@@ -1,5 +1,5 @@
 
-name: jd_joy_reward 宠汪汪积分兑换奖品
+name: jre 宠汪汪积分兑换奖品
  
 on:
   workflow_dispatch:
@@ -30,7 +30,7 @@ jobs:
       - name: 运行 【宠汪汪积分兑换奖品】
         if: env.JD_COOKIE
         run: |
-          node jd_joy_reward.js
+          node jre.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

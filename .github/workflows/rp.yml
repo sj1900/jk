@@ -1,5 +1,5 @@
 
-name: jd_redPacket 京东全民开红包
+name: rp 京东全民开红包
  
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: 运行 【京东全民开红包】
         if: env.JD_COOKIE
         run: |
-          node jd_redPacket.js
+          node rp.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

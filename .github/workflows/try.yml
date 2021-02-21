@@ -1,5 +1,5 @@
 
-name: jd_try 京东试用
+name: try 京东试用
  
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: 运行 【京东试用】
         if: env.JD_COOKIE
         run: |
-          node jd_try.js
+          node try.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

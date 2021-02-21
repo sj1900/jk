@@ -1,11 +1,3 @@
-/*
-
-京东排行榜
-
-自用
-author：yangtingxiao
-github： https://github.com/yangtingxiao
- */
 const $ = new Env('京东排行榜');
 main();
 async function main() {

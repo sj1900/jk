@@ -1,19 +1,3 @@
-/*
- * @Author: LXK9301 https://github.com/LXK9301
- * @Date: 2020-11-10 14:07:07 
- * @Last Modified by: LXK9301
- * @Last Modified time: 2020-11-23 12:27:16
- */
-/*
-京东金融养猪猪
-一键开完所有的宝箱功能。耗时70秒
-大转盘抽奖
-喂食
-每日签到
-完成分享任务得猪粮
-12 * * * *
- */
-
 const $ = new Env('金融养猪');
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';

@@ -31,7 +31,7 @@ jobs:
       - name: 运行 【京豆签到脚本】
         if: env.JD_COOKIE
         run: |
-          node bs.js
+          node JD_DailyBonus.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

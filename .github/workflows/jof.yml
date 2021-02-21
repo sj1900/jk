@@ -1,5 +1,5 @@
 
-name: jd_joy_feedPets 宠汪汪喂食
+name: jof 宠汪汪喂食
  
 on:
   workflow_dispatch:
@@ -29,7 +29,7 @@ jobs:
       - name: 运行 【宠汪汪喂食】
         if: env.JD_COOKIE
         run: |
-          node jd_joy_feedPets.js
+          node jof.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

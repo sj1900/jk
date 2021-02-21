@@ -1,5 +1,5 @@
 
-name: jd_paopao 京东泡泡大战
+name: pop 京东泡泡大战
  
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: 运行 【京东泡泡大战】
         if: env.JD_COOKIE
         run: |
-          node jd_paopao.js
+          node pop.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY || github.event.client_payload.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH || github.event.client_payload.BARK_PUSH }}

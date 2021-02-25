@@ -11,21 +11,6 @@
 脚本内置了一个给作者任务助力的网络请求，默认开启，如介意请自行关闭。
 助力活动链接： https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html
 参数 helpAuthor = false
-
-更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_gjmh.js
-已支持IOS双京东账号, Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
-============Quantumultx===============
-[task_local]
-#国际盲盒
-10 13 23-28,1 2-3 * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_gjmh.js, tag=国际盲盒, enabled=true
-================Loon==============
-[Script]
-cron "10 13 23-28,1 2-3 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_gjmh.js, tag=国际盲盒
-===============Surge=================
-国际盲盒 = type=cron,cronexp="10 13 23-28,1 2-3 *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_gjmh.js
-============小火箭=========
-国际盲盒 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_gjmh.js, cronexpr="10 13 23-28,1 2-3 *", timeout=3600, enable=true
  */
 const $ = new Env('国际盲盒');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

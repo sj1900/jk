@@ -1,6 +1,9 @@
 const $ = new Env('京豆变动通知');
 const notify = $.isNode() ? require('./sendNotify') : '';
+//Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+let allMessage = '';
+//IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -8,13 +11,7 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 !(async () => {
   if (!cookiesArr[0]) {
@@ -49,6 +46,10 @@ if ($.isNode()) {
       await showMsg();
     }
   }
+
+  if ($.isNode() && allMessage) {
+    await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
+  }
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -58,13 +59,20 @@ if ($.isNode()) {
     })
 async function showMsg() {
   if ($.errorMsg) return
-  if ($.isNode()) {
-    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
-  }
+  allMessage += `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+  // if ($.isNode()) {
+  //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
+  // }
   $.msg($.name, '', `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
 async function bean() {
+  // console.log(`北京时间零点时间戳:${parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000}`);
+  // console.log(`北京时间2020-10-28 06:16:05::${new Date("2020/10/28 06:16:05+08:00").getTime()}`)
+  // 不管哪个时区。得到都是当前时刻北京时间的时间戳 new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000
+
+  //前一天的0:0:0时间戳
   const tm = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000 - (24 * 60 * 60 * 1000);
+  // 今天0:0:0时间戳
   const tm1 = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000;
   let page = 1, t = 0, yesterdayArr = [];
   do {
@@ -77,8 +85,10 @@ async function bean() {
         for (let item of detailList) {
           const date = item.date.replace(/-/g, '/') + "+08:00";
           if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1) {
+            //昨日的
             yesterdayArr.push(item);
           } else if (tm > new Date(date).getTime()) {
+            //前天的
             t = 1;
             break;
           }
@@ -97,8 +107,10 @@ async function bean() {
       $.expenseBean += Number(item.amount);
     }
   }
-  await queryexpirejingdou();
-  await redPacket();
+  await queryexpirejingdou();//过期京豆
+  await redPacket();//过期红包
+  // console.log(`昨日收入：${$.incomeBean}个京豆 🐶`);
+  // console.log(`昨日支出：${$.expenseBean}个京豆 🐶`)
 }
 function TotalBean() {
   return new Promise(async resolve => {
@@ -127,7 +139,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = data['base'].nickname;
+            } else {
+              $.nickName = $.UserName
+            }
             if (data['retcode'] === 0) {
               $.beanCount = data['base'].jdNum;
             }

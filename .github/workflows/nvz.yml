@@ -1,10 +1,10 @@
 
-name: nvz 女装盲盒(2.25)
+name: nvz 女装盲盒(3.8)
  
 on:
   workflow_dispatch:
   schedule:
-     - cron: '5 23 * * *'
+     - cron: '5 17,18,19,20,21,22,23 * * *'
   watch:
     types: started
 jobs:

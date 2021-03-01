@@ -1,9 +1,17 @@
+/*
+京东赚赚
+可以做随机互助
+活动入口：京东赚赚小程序
+长期活动，每日收益2毛左右，多号互助会较多
+ */
 const $ = new Env('京东赚赚');
 const notify = $.isNode() ? require('./sendNotify') : '';
+//Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let helpAuthor=true; // 帮助作者
 const randomCount = $.isNode() ? 20 : 5;
 let jdNotify = true; // 是否关闭通知，false打开通知推送，true关闭通知推送
+//IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -12,13 +20,7 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
 } else {
-  let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = jsonParse(cookiesData);
-  cookiesArr = cookiesData.map(item => item.cookie);
-  cookiesArr.reverse();
-  cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-  cookiesArr.reverse();
-  cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
@@ -118,7 +120,7 @@ function showMsg() {
       $.log(message)
     }
     // 云端大于10元无门槛红包时进行通知推送
-    if ($.isNode() && $.totalNum >= 100000) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
+    if ($.isNode() && $.totalNum >= 1000000) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
     resolve();
   })
 }
@@ -463,7 +465,11 @@ function TotalBean() {
               $.isLogin = false; //cookie过期
               return
             }
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = data['base'].nickname;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`)
           }

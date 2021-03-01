@@ -1,21 +1,14 @@
-/**
- * 京东保价
- * 京东 api 只能查询60天的订单
- * 保价期限是以物流签收时间为准的，30天是最长保价期。
- * 所以订单下单时间以及发货、收货时间，也可能占用很多天，60天内的订单进行保价是正常的。
- * 没进行过保价的60天内的订单。查询一次，不符合保价的，不会再次申请保价。
- *
- * 支持云端cookie使用
- * 修改自：https://raw.githubusercontent.com/ZCY01/daily_scripts/main/jd/jd_priceProtect.js
- * 修改自：https://raw.githubusercontent.com/id77/QuantumultX/master/task/jdGuaranteedPrice.js
- *
- * 京东保价页面脚本：https://static.360buyimg.com/siteppStatic/script/priceskus-phone.js
- *
- *
- * > iOS同时支持使用 NobyDa 与 domplin 脚本的京东 cookie
- *
+/*
+京东保价
+京东 api 只能查询60天的订单
+保价期限是以物流签收时间为准的，30天是最长保价期。
+所以订单下单时间以及发货、收货时间，也可能占用很多天，60天内的订单进行保价是正常的。
+没进行过保价的60天内的订单。查询一次，不符合保价的，不会再次申请保价。
+支持云端cookie使用
+修改自：https://raw.githubusercontent.com/ZCY01/daily_scripts/main/jd/jd_priceProtect.js
+修改自：https://raw.githubusercontent.com/id77/QuantumultX/master/task/jdGuaranteedPrice.js
+京东保价页面脚本：https://static.360buyimg.com/siteppStatic/script/priceskus-phone.js
  */
-
 const $ = new Env('京东保价');
 
 const selfDomain = 'https://msitepp-fm.jd.com/';
@@ -500,7 +493,11 @@ function totalBean() {
               return;
             }
             $.isLogin = true;
-            $.nickName = data['base'].nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = data['base'].nickname;
+            } else {
+              $.nickName = $.UserName
+            }
           } else {
             console.log(`京东服务器返回空数据`);
           }

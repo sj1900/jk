@@ -3,6 +3,7 @@ let cookiesArr = [],
 	cookie = '',
 	jdNotify = false,
 	jdDebug = false,
+    	allMessage = ``,
 	notify
 const selfdomain = 'https://try.m.jd.com'
 let allGoodList = []
